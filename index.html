@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 马年大吉</title>
+    <title>2026 丙午火马 - 冬阳祝</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
     <style>
-        /* 1. 基础样式与背景 */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #a31a1a; /* 深红色背景 */
-            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #961919; /* 高级冷调深红 */
+            font-family: "PingFang SC", "Lantinghei SC", "Microsoft YaHei", sans-serif; /* 优先使用细体中文系统字 */
         }
 
         #canvas {
@@ -23,7 +23,6 @@
             z-index: 1;
         }
 
-        /* 2. 内容层 */
         .content {
             position: relative;
             z-index: 2;
@@ -32,54 +31,100 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            color: #f6e0b5; /* 浅金色 */
+            color: #f6e0b5; /* 浅香槟金 */
             text-align: center;
-            pointer-events: none; /* 让点击穿透到 canvas */
+            pointer-events: none;
         }
 
+        /* 1. 年份：极致纤瘦 */
         .title-year {
-            font-size: 80px;
-            font-weight: bold;
-            font-style: italic;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 100px; 
+            font-weight: 100; /* 极细 */
+            letter-spacing: 18px; 
             margin: 0;
-            background: linear-gradient(to bottom, #fff6e5, #f6e0b5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            font-family: 'Times New Roman', serif;
+            color: rgba(246, 224, 181, 0.9);
+            line-height: 1;
+        }
+
+        /* 2. 生肖与干支：中式极简排版 */
+        .zodiac-group {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .zodiac-sign {
-            font-size: 24px;
-            letter-spacing: 5px;
-            margin-top: -10px;
+            font-size: 16px;
+            letter-spacing: 12px;
+            font-weight: 300;
+            opacity: 0.85;
+            text-indent: 12px; /* 视觉居中修正 */
+        }
+
+        .sub-tag {
+            font-size: 13px;
+            letter-spacing: 8px;
+            opacity: 0.6;
+            font-weight: 300;
+            text-indent: 8px; /* 视觉居中修正 */
             margin-bottom: 20px;
         }
 
-        .blessing {
-            font-size: 20px;
-            line-height: 1.8;
-            margin-top: 50px;
-            padding: 0 20px;
+        /* 3. 分割线与倒计时 */
+        .countdown-container {
+            margin-top: 30px;
+            padding: 12px 0;
+            border-top: 1px solid rgba(246, 224, 181, 0.2);
+            border-bottom: 1px solid rgba(246, 224, 181, 0.2);
+            width: 260px; /* 定宽保持精致 */
+        }
+
+        #timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
             font-weight: 300;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 4. 祝福语：冬阳祝你... */
+        .blessing {
+            font-size: 15px;
+            line-height: 2.4; /* 增大行高，增加呼吸感 */
+            margin-top: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(246, 224, 181, 0.9);
+        }
+        
+        /* 名字加粗一点点，突出主体 */
+        .blessing strong {
+            font-weight: 400; 
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .footer {
             position: absolute;
-            bottom: 40px;
-            font-size: 14px;
-            opacity: 0.8;
-            letter-spacing: 2px;
+            bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 200;
+            opacity: 0.4;
+            letter-spacing: 4px;
         }
 
-        /* 简单的淡入动画 */
+        /* 入场动画 */
         .fade-in {
-            animation: fadeIn 3s ease-in forwards;
+            animation: fadeIn 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(10px); letter-spacing: 25px; }
+            to { opacity: 1; transform: translateY(0); letter-spacing: 18px; }
         }
     </style>
 </head>
@@ -89,30 +134,36 @@
 
     <div class="content fade-in">
         <h1 class="title-year">2026</h1>
-        <div class="zodiac-sign">马 到 成 功</div>
         
-        <div class="blessing">
-            <p>冬阳祝你：</p>
-            <p>如骏马奔腾，前程万里</p>
-            <p>岁岁常欢愉，年年皆胜意</p>
+        <div class="zodiac-group">
+            <div class="zodiac-sign">马到成功</div>
+            <div class="sub-tag">丙 午 火 马</div>
+        </div>
+        
+        <div class="countdown-container">
+            <div id="timer">Loading...</div>
         </div>
 
-        <div class="footer">HAPPY NEW YEAR</div>
+        <div class="blessing">
+            <strong>冬阳祝你：</strong>
+            <p>如骏马奔腾 · 前程万里</p>
+            <p>岁岁常欢愉 · 年年皆胜意</p>
+        </div>
+
+        <div class="footer">DESIGNED BY DONGYANG · 2026</div>
     </div>
 
     <script>
+        // 烟花逻辑保持简约风格
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-
         let width, height;
         let particles = [];
 
-        // 适配屏幕尺寸
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
-
         window.addEventListener('resize', resize);
         resize();
 
@@ -122,48 +173,45 @@
                 this.y = y;
                 this.color = color;
                 this.velocity = {
-                    x: (Math.random() - 0.5) * 8,
-                    y: (Math.random() - 0.5) * 8
+                    x: (Math.random() - 0.5) * 6,
+                    y: (Math.random() - 0.5) * 6
                 };
                 this.alpha = 1;
-                this.friction = 0.95;
+                this.friction = 0.97;
             }
-
             draw() {
                 ctx.globalAlpha = this.alpha;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.fill();
             }
-
             update() {
                 this.velocity.x *= this.friction;
                 this.velocity.y *= this.friction;
-                this.y += 0.1; // 重力
+                this.y += 0.08; 
                 this.x += this.velocity.x;
                 this.y += this.velocity.y;
-                this.alpha -= 0.01;
+                this.alpha -= 0.015;
             }
         }
 
         function createFirework() {
             const x = Math.random() * width;
-            const y = Math.random() * (height * 0.6);
-            const colors = ['#ffcc00', '#ff3300', '#ffffff', '#ffeb3b', '#ff5722'];
+            const y = Math.random() * (height * 0.5);
+            // 颜色：浅金、白、微红
+            const colors = ['#f6e0b5', '#ffffff', '#ff6b6b', '#ffd700'];
             const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 35; i++) {
                 particles.push(new Particle(x, y, color));
             }
         }
 
         function animate() {
-            // 每一帧画一个半透明矩形，产生拖尾效果
-            ctx.fillStyle = 'rgba(163, 26, 26, 0.2)';
+            ctx.fillStyle = 'rgba(150, 25, 25, 0.15)'; 
             ctx.fillRect(0, 0, width, height);
 
-            if (Math.random() < 0.05) createFirework();
+            if (Math.random() < 0.04) createFirework();
 
             particles.forEach((p, i) => {
                 if (p.alpha <= 0) {
@@ -173,18 +221,40 @@
                     p.draw();
                 }
             });
-
             requestAnimationFrame(animate);
         }
-
         animate();
 
-        // 点击屏幕发射烟花
+        // 倒计时逻辑
+        function updateCountdown() {
+            const targetDate = new Date("February 17, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+
+            if (gap <= 0) {
+                document.getElementById('timer').innerText = "HAPPY NEW YEAR";
+                return;
+            }
+
+            const second = 1000, minute = 60000, hour = 3600000, day = 86400000;
+            const d = Math.floor(gap / day);
+            const h = Math.floor((gap % day) / hour);
+            const m = Math.floor((gap % hour) / minute);
+            const s = Math.floor((gap % minute) / second);
+            const format = (n) => n < 10 ? '0' + n : n;
+
+            // 极简数字风格
+            document.getElementById('timer').innerText = `${d}D  ${format(h)}H  ${format(m)}M  ${format(s)}S`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
         window.addEventListener('touchstart', (e) => {
             const x = e.touches[0].clientX;
             const y = e.touches[0].clientY;
-            for (let i = 0; i < 50; i++) {
-                particles.push(new Particle(x, y, '#f6e0b5'));
+            for (let i = 0; i < 40; i++) {
+                particles.push(new Particle(x, y, '#ffffff'));
             }
         });
     </script>
