@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2027 马年大吉</title>
+    <style>
+        /* 1. 基础样式与背景 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #a31a1a; /* 深红色背景 */
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* 2. 内容层 */
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #f6e0b5; /* 浅金色 */
+            text-align: center;
+            pointer-events: none; /* 让点击穿透到 canvas */
+        }
+
+        .title-year {
+            font-size: 80px;
+            font-weight: bold;
+            font-style: italic;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff6e5, #f6e0b5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            font-family: 'Times New Roman', serif;
+        }
+
+        .zodiac-sign {
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .blessing {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-top: 50px;
+            padding: 0 20px;
+            font-weight: 300;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        /* 简单的淡入动画 */
+        .fade-in {
+            animation: fadeIn 3s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="content fade-in">
+        <h1 class="title-year">2027</h1>
+        <div class="zodiac-sign">马 到 成 功</div>
+        
+        <div class="blessing">
+            <p>冬阳祝你：</p>
+            <p>如骏马奔腾，前程万里</p>
+            <p>岁岁常欢愉，年年皆胜意</p>
+        </div>
+
+        <div class="footer">HAPPY NEW YEAR</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+
+        // 适配屏幕尺寸
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.friction = 0.95;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.y += 0.1; // 重力
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.01;
+            }
+        }
+
+        function createFirework() {
+            const x = Math.random() * width;
+            const y = Math.random() * (height * 0.6);
+            const colors = ['#ffcc00', '#ff3300', '#ffffff', '#ffeb3b', '#ff5722'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            for (let i = 0; i < 40; i++) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function animate() {
+            // 每一帧画一个半透明矩形，产生拖尾效果
+            ctx.fillStyle = 'rgba(163, 26, 26, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+
+            if (Math.random() < 0.05) createFirework();
+
+            particles.forEach((p, i) => {
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                } else {
+                    p.update();
+                    p.draw();
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 点击屏幕发射烟花
+        window.addEventListener('touchstart', (e) => {
+            const x = e.touches[0].clientX;
+            const y = e.touches[0].clientY;
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle(x, y, '#f6e0b5'));
+            }
+        });
+    </script>
+</body>
+</html>
